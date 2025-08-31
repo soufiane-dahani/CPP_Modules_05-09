@@ -7,7 +7,7 @@ int main()
         std::cout << "try risky code \n";
         Bureaucrat b("dahani", 1);
         std::cout << b ;
-        b.incrementGrade();
+        b.decrementGrade();
         std::cout << b ;
     }
     catch (const std::exception &e)
