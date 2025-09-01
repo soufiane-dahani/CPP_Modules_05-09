@@ -1,11 +1,10 @@
-
 CC = c++
 
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 
-NAME = megaphone
+NAME = Form
 
-SRC = megaphone.cpp
+SRC =  Form.cpp Bureaucrat.cpp main.cpp
 OBJ = $(SRC:.cpp=.o)
 
 
