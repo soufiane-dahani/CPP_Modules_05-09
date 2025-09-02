@@ -1,18 +1,26 @@
-#include "Bureaucrat.hpp"
 #include <iostream>
+#include "Bureaucrat.hpp"
+#include "Form.hpp"
 
-int main()
-{
+int main() {
     try {
-        std::cout << "try risky code \n";
-        Bureaucrat b("dahani", 1);
-        std::cout << b ;
-        b.decrementGrade();
-        std::cout << b ;
-    }
-    catch (const std::exception &e)
-    {
-        std::cout << "something happen error " << e.what() << std::endl ;
+        Bureaucrat alice("Alice", 50);
+        Bureaucrat bob("Bob", 120);
+
+        Form contract("Work Contract", 100, 50);
+
+        std::cout << contract << std::endl;
+
+        bob.signForm(contract);
+
+        std::cout << contract << std::endl;
+
+        alice.signForm(contract);
+
+        std::cout << contract << std::endl;
+
+    } catch (std::exception& e) {
+        std::cout << "Exception caught in main: " << e.what() << std::endl;
     }
     return 0;
 }

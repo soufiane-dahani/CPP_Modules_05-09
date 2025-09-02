@@ -1,6 +1,6 @@
 #include <iostream>
-#pragma once
 #include <exception>
+#pragma once
 class Bureaucrat;
 
 class Form 
