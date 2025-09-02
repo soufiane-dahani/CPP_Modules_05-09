@@ -12,7 +12,7 @@ Bureaucrat::Bureaucrat(const std::string& name, int grade) : _name(name)
 
 Bureaucrat::~Bureaucrat()
 {
-    std::cout << "default destructor " << std::endl ;
+    std::cout << "default destructor Bureaucrat" << std::endl ;
 }
 
 const std::string&  Bureaucrat::getName() const
