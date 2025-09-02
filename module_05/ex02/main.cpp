@@ -1,26 +1,39 @@
-#include <iostream>
 #include "Bureaucrat.hpp"
-#include "Form.hpp"
+#include "ShrubberyCreationForm.hpp"
+#include <iostream>
 
-int main() {
-    try {
-        Bureaucrat alice("Alice", 50);
-        Bureaucrat bob("Bob", 120);
+int main()
+{
+    try
+    {
+        Bureaucrat bob("Bob", 137);
+        ShrubberyCreationForm form("home");
 
-        Form contract("Work Contract", 100, 50);
-
-        std::cout << contract << std::endl;
-
-        bob.signForm(contract);
-
-        std::cout << contract << std::endl;
-
-        alice.signForm(contract);
-
-        std::cout << contract << std::endl;
-
-    } catch (std::exception& e) {
-        std::cout << "Exception caught in main: " << e.what() << std::endl;
+        std::cout << form << std::endl;
+        try
+        {
+            form.execute(bob);
+        }
+        catch (std::exception &e)
+        {
+            std::cout << "Execution failed: " << e.what() << std::endl;
+        }
+        bob.signForm(form);
+        std::cout << form << std::endl;
+        try
+        {
+            form.execute(bob);
+            std::cout << "Execution succeeded!" << std::endl;
+        }
+        catch (std::exception &e)
+        {
+            std::cout << "Execution failed: " << e.what() << std::endl;
+        }
     }
+    catch (std::exception &e)
+    {
+        std::cout << "Error: " << e.what() << std::endl;
+    }
+
     return 0;
 }

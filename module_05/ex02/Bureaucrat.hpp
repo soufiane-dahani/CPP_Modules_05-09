@@ -1,7 +1,7 @@
 #include <iostream>
 #pragma once
 
-class Form;
+class AForm;
 
 class Bureaucrat
 {
@@ -27,7 +27,7 @@ class Bureaucrat
         int  getGrade() const;
         void incrementGrade();
         void decrementGrade();
-        void signForm(Form& f);
+        void signForm(AForm& f);
 
 };
 

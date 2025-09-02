@@ -1,4 +1,4 @@
-#include "Form.hpp"
+#include "AForm.hpp"
 #include "Bureaucrat.hpp"
 
 Bureaucrat::Bureaucrat(const std::string& name, int grade) : _name(name)
@@ -12,7 +12,7 @@ Bureaucrat::Bureaucrat(const std::string& name, int grade) : _name(name)
 
 Bureaucrat::~Bureaucrat()
 {
-    std::cout << "default destructor " << std::endl ;
+    std::cout << "default destructor Bureaucrat" << std::endl ;
 }
 
 const std::string&  Bureaucrat::getName() const
@@ -54,7 +54,7 @@ std::ostream& operator<<(std::ostream& os, const Bureaucrat& b)
     return os;
 }
 
-void Bureaucrat::signForm(Form& f) {
+void Bureaucrat::signForm(AForm& f) {
     try {
         f.beSigned(*this);
         std::cout << this->getName() << " signed " << f.getName() << std::endl;
