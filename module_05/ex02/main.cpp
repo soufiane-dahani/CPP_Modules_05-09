@@ -1,13 +1,13 @@
 #include "Bureaucrat.hpp"
-#include "ShrubberyCreationForm.hpp"
+#include "PresidentialPardonForm.hpp"
 #include <iostream>
 
 int main()
 {
     try
     {
-        Bureaucrat bob("Bob", 137);
-        ShrubberyCreationForm form("home");
+        Bureaucrat bob("Bob", 5);
+        PresidentialPardonForm form("home");
 
         std::cout << form << std::endl;
         try
