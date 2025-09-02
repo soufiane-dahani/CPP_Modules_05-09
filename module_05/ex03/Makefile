@@ -1,11 +1,10 @@
-
 CC = c++
 
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 
-NAME = megaphone
+NAME =  coffee-making
 
-SRC = megaphone.cpp
+SRC =  Bureaucrat.cpp main.cpp ShrubberyCreationForm.cpp RobotomyRequestForm.cpp PresidentialPardonForm.cpp AForm.cpp Intern.cpp
 OBJ = $(SRC:.cpp=.o)
 
 
