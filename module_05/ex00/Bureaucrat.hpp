@@ -1,5 +1,5 @@
 #include <iostream>
-
+#pragma once
 class Bureaucrat
 {
     private :
