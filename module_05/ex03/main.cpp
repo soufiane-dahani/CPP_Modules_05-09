@@ -1,39 +1,28 @@
+#include "Intern.hpp"
 #include "Bureaucrat.hpp"
-#include "PresidentialPardonForm.hpp"
-#include <iostream>
 
-int main()
-{
-    try
-    {
-        Bureaucrat bob("Bob", 5);
-        PresidentialPardonForm form("home");
+int main() {
+    Intern someRandomIntern;
+    AForm* form;
 
-        std::cout << form << std::endl;
+    form = someRandomIntern.makeForm("robotomy request", "Bender");
+    if (form) {
         try
         {
-            form.execute(bob);
+        Bureaucrat bob("Bob", 140);
+        form->beSigned(bob);
+            form->execute(bob);
         }
-        catch (std::exception &e)
+        catch(const std::exception& e)
         {
-            std::cout << "Execution failed: " << e.what() << std::endl;
+            std::cerr  << "failed: "<< e.what() << '\n';
         }
-        bob.signForm(form);
-        std::cout << form << std::endl;
-        try
-        {
-            form.execute(bob);
-            std::cout << "Execution succeeded!" << std::endl;
-        }
-        catch (std::exception &e)
-        {
-            std::cout << "Execution failed: " << e.what() << std::endl;
-        }
+        delete form;
     }
-    catch (std::exception &e)
-    {
-        std::cout << "Error: " << e.what() << std::endl;
-    }
+
+    form = someRandomIntern.makeForm("invalid form", "TargetX");
+    if (form) delete form;
 
     return 0;
 }
+
