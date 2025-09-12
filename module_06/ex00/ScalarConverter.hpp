@@ -4,6 +4,10 @@
 class ScalarConverter
 {
     private:
+        ScalarConverter();
+        ScalarConverter(const ScalarConverter &);
+        ScalarConverter &operator=(const ScalarConverter &);
+        ~ScalarConverter();
         static void printChar(double value);
         static void printInt(double value);
         static void printFloat(double value);
@@ -12,11 +16,7 @@ class ScalarConverter
         static bool isInt(std::string const &literal);
         static bool isFloat(std::string const &literal);
         static bool isDouble(std::string const &literal);
+
     public:
         static void convert(std::string const &literal);
-        ScalarConverter() = delete;
-        ScalarConverter(ScalarConverter const &) = delete;
-        ScalarConverter &operator=(ScalarConverter const &) = delete;
-        ~ScalarConverter() = delete;
-
 };
