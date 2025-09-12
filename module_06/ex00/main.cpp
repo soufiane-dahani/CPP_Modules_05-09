@@ -30,9 +30,13 @@ int main()
     ScalarConverter::convert("-inff");
 
     std::cout << "\n==== Test with edge cases ====" << std::endl;
-    ScalarConverter::convert("2147483647");  // INT_MAX
-    ScalarConverter::convert("-2147483648"); // INT_MIN
-    ScalarConverter::convert("340282346638528859811704183484516925440.0f"); // float max
+    ScalarConverter::convert("2147483647");
+    ScalarConverter::convert("-2147483648");
+    ScalarConverter::convert("340282346638528859811704183484516925440.0f");
+
+    std::cout << "\n==== Test Errors ====" << std::endl;
+    ScalarConverter::convert("hello");
+    ScalarConverter::convert("ggg");
 
     return 0;
 }
