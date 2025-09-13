@@ -3,9 +3,9 @@ CC = c++
 
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 
-NAME = megaphone
+NAME = Identify
 
-SRC = megaphone.cpp
+SRC = main.cpp Base.cpp A.cpp B.cpp C.cpp 
 OBJ = $(SRC:.cpp=.o)
 
 
