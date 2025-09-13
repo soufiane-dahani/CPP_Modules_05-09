@@ -3,9 +3,9 @@ CC = c++
 
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 
-NAME = megaphone
+NAME = Serialization
 
-SRC = megaphone.cpp
+SRC = Data.cpp main.cpp Serializer.cpp
 OBJ = $(SRC:.cpp=.o)
 
 
