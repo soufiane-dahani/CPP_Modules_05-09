@@ -8,6 +8,7 @@ NAME = Identify
 SRC = main.cpp Base.cpp Identify.cpp
 OBJ = $(SRC:.cpp=.o)
 
+BRANCH = main
 
 all: $(NAME)
 
@@ -25,3 +26,9 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+
+p:
+	@read -p "Commit message: " msg; \
+	git add . && git commit -m "$$msg" && git push origin $(BRANCH)
+
