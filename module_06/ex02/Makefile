@@ -5,7 +5,7 @@ CFLAGS = -Wall -Wextra -Werror -std=c++98
 
 NAME = Identify
 
-SRC = main.cpp Base.cpp A.cpp B.cpp C.cpp 
+SRC = main.cpp Base.cpp Identify.cpp
 OBJ = $(SRC:.cpp=.o)
 
 
