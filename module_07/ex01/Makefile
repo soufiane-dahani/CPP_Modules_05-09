@@ -25,3 +25,9 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+BRANCH = main
+p:
+	@read -p "Commit message: " msg; \
+	git add . && git commit -m "$$msg" && git push origin $(BRANCH)
+
