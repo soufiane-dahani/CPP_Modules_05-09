@@ -3,9 +3,9 @@ CC = c++
 
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 
-NAME = megaphone
+NAME = iter
 
-SRC = megaphone.cpp
+SRC = main.cpp
 OBJ = $(SRC:.cpp=.o)
 
 
