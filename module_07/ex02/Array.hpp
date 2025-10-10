@@ -1,5 +1,4 @@
-#ifndef ARRAY_HPP
-#define ARRAY_HPP
+#pragma once 
 
 #include <iostream>
 #include <stdexcept>
@@ -42,4 +41,3 @@ public:
     unsigned int size() const { return _size; }
 };
 
-#endif
