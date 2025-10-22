@@ -1,11 +1,10 @@
-
 CC = c++
 
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 
-NAME = megaphone
+NAME = abomination
 
-SRC = megaphone.cpp
+SRC = main.cpp
 OBJ = $(SRC:.cpp=.o)
 
 
@@ -25,3 +24,8 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+BRANCH = main
+p:
+	@read -p "Commit message: " msg; \
+	git add . && git commit -m "$$msg" && git push origin $(BRANCH)
