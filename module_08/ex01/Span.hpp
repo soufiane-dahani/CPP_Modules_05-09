@@ -25,3 +25,12 @@ class Span
         int shortestSpan() const;
         int longestSpan() const;
 };
+
+template <typename It>
+void Span::addNumber(It begin, It end)
+{
+    unsigned int rangeSize = std::distance(begin, end);
+    if (_numbers.size() + rangeSize > _maxSize)
+        throw std::runtime_error("Cannot add range: Span would exceed max size");
+    _numbers.insert(_numbers.end(), begin, end);
+}
