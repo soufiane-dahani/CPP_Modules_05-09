@@ -2,9 +2,9 @@ CC = c++
 
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 
-NAME = abomination
+NAME = RPN
 
-SRC = main.cpp
+SRC = RPN.cpp main.cpp 
 OBJ = $(SRC:.cpp=.o)
 
 
