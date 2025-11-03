@@ -2,9 +2,9 @@ CC = c++
 
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 
-NAME = abomination
+NAME = PmergeMe
 
-SRC = main.cpp
+SRC = main.cpp PmergeMe.cpp
 OBJ = $(SRC:.cpp=.o)
 
 
