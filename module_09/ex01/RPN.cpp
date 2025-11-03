@@ -28,6 +28,8 @@ void RPN::evaluate(const std::string &expr)
     std::string token;
     while (iss >> token)
     {
+        if (token[0] == '+')
+            token.erase(0, 1);
         if (isdigit(token[0]))
         {
             if (token.find_first_not_of("/*+-") == std::string::npos)
