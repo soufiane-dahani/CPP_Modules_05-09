@@ -6,6 +6,7 @@
 #include <stack>
 #include <string>
 #include <stdexcept>
+#include <iomanip>
 
 PmergeMe::PmergeMe() {}
 
@@ -50,6 +51,7 @@ void PmergeMe::parsing(const std::string& str)
         _deq.push_back(number);
     }
 }
+
 void PmergeMe::processInput(char **argv)
 {
     int i = 1;
@@ -59,3 +61,48 @@ void PmergeMe::processInput(char **argv)
         i++;
     }
 }
+
+void PmergeMe::fordJohnsonSort(std::vector<int> &container)
+{
+
+}
+
+
+
+void PmergeMe::fordJohnsonSort(std::deque<int> &container)
+{
+
+}
+
+
+void PmergeMe::displayResults()
+{
+    std::cout << "Before: ";
+    for (size_t i = 0; i < _vec.size(); ++i)
+        std::cout << _vec[i] << " ";
+    std::cout << std::endl;
+
+    std::vector<int> vecCopy = _vec;
+    clock_t startVec = clock();
+    fordJohnsonSort(vecCopy);
+    clock_t endVec = clock();
+    double elapsedVec = static_cast<double>(endVec - startVec) / CLOCKS_PER_SEC * 1000000.0;
+
+    std::deque<int> deqCopy = _deq;
+    clock_t startDeq = clock();
+    fordJohnsonSort(deqCopy);
+    clock_t endDeq = clock();
+    double elapsedDeq = static_cast<double>(endDeq - startDeq) / CLOCKS_PER_SEC * 1000000.0;
+
+    std::cout << "After:  ";
+    for (size_t i = 0; i < vecCopy.size(); ++i)
+        std::cout << vecCopy[i] << " ";
+    std::cout << std::endl;
+
+    std::cout << std::fixed << std::setprecision(5);
+    std::cout << "Time to process a range of " << _vec.size()
+              << " elements with std::vector : " << elapsedVec << " us" << std::endl;
+    std::cout << "Time to process a range of " << _deq.size()
+              << " elements with std::deque  : " << elapsedDeq << " us" << std::endl;
+}
+
