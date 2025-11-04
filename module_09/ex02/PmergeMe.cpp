@@ -64,7 +64,26 @@ void PmergeMe::processInput(char **argv)
 
 void PmergeMe::fordJohnsonSort(std::vector<int> &container)
 {
+    int order = 1;
+    int last_pos;
+    int first_pos;
 
+    while (order <= container.size() / 2)
+    {
+        last_pos = (order * 2) - 1;
+        first_pos = order - 1;
+        while (container.size() - 1 >= last_pos)
+        {
+            if (container[first_pos] > container[last_pos])
+            {
+                container = swap_container(first_pos, last_pos, &container, order);
+            }
+            first_pos += order + 1;
+            last_pos +=order + 1;
+        }
+        
+        order = order * 2;
+    }
 }
 
 
