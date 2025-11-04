@@ -70,18 +70,17 @@ void PmergeMe::fordJohnsonSort(std::vector<int> &container)
 
     while (order <= container.size() / 2)
     {
-        last_pos = (order * 2) - 1;
+        last_pos = (order * 2) - 1; // 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0
         first_pos = order - 1;
-        while (container.size() - 1 >= last_pos)
+        while (last_pos < container.size())  // Changed >= to 
         {
             if (container[first_pos] > container[last_pos])
             {
                 container = swap_container(first_pos, last_pos, &container, order);
             }
-            first_pos += order + 1;
-            last_pos +=order + 1;
+            first_pos = first_pos + (2 * order);  // Fixed: add 2*order
+            last_pos = last_pos + (2 * order);    // Fixed: add 2*order
         }
-        
         order = order * 2;
     }
 }

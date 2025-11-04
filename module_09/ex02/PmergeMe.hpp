@@ -21,24 +21,25 @@ public:
     void fordJohnsonSort(std::deque<int> &container);
 };
 
-#include <vector>
-#include <deque>
-#include <algorithm> // for std::swap
-
 template <typename Container>
 Container swap_container(int first_pos, int last_pos, Container *container, int order)
 {
     // Make a copy of the original container to modify safely
     Container result = *container;
 
-    // Swap blocks of size 'order' starting from first_pos and last_pos
+    // Calculate the start positions of both blocks
+    int block1_start = first_pos - order + 1;  // Start of first block
+    int block2_start = last_pos - order + 1;   // Start of second block
+
+    // Swap blocks of size 'order'
     for (int i = 0; i < order; ++i)
     {
-        if (first_pos + i < (int)container->size() && last_pos + i < (int)container->size())
+        if (block1_start + i >= 0 && block1_start + i < (int)container->size() &&
+            block2_start + i >= 0 && block2_start + i < (int)container->size())
         {
-            typename Container::value_type temp = (*container)[first_pos + i];
-            result[first_pos + i] = (*container)[last_pos + i];
-            result[last_pos + i] = temp;
+            typename Container::value_type temp = (*container)[block1_start + i];
+            result[block1_start + i] = (*container)[block2_start + i];
+            result[block2_start + i] = temp;
         }
     }
 
