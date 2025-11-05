@@ -62,6 +62,14 @@ void PmergeMe::processInput(char **argv)
     }
 }
 
+void printVector(const std::vector<int>& vec, const std::string& name)
+{
+    std::cout << name << ": ";
+    for (size_t i = 0; i < vec.size(); ++i)
+        std::cout << vec[i] << (i + 1 < vec.size() ? ", " : "");
+    std::cout << std::endl;
+}
+
 void PmergeMe::fordJohnsonSort(std::vector<int> &container)
 {
     int order = 1;
@@ -88,48 +96,52 @@ void PmergeMe::fordJohnsonSort(std::vector<int> &container)
     {
         if (order == 1)
             break;
+        
         std::vector<int> main;
         std::vector<int> pend;
         std::vector<int> leftover;
-        int i = 0;
-        int j = 0;
-        int a1 = 0;
-
-        while (order * i <= container.size())
+        
+        int pos = 0;
+        bool first_a = true;
+        
+        // Process pairs of groups (a, b)
+        while (pos + order <= container.size())
         {
-            if ((order * i) % 2 == 0) // all b
+            // Process group 'a'
+            for (int j = 0; j < order && pos + j < container.size(); j++)
             {
-                j = 0;
-                while (j < order)
-                {
-                    main.push_back(container[(order * i) + j]);
-                    j++;
-                }
-            }
-            else
-            {
-                j = 0;
-                if (a1 == 0)
-                {
-                    a1 = 1;
-                    while (j < order)
-                    {
-                        main.push_back(container[(order * i) + j]);
-                        j++;
-                    }
-                }
+                if (first_a)
+                    main.push_back(container[pos + j]);
                 else
-                    {
-                        while (j < order)
-                        {
-                            pend.push_back(container[(order * i) + j]);
-                            j++;
-                        }
-                    }
+                    pend.push_back(container[pos + j]);
             }
-            i++;
+            pos += order;
+            
+            if (pos + order > container.size())
+                break;
+            
+            // Process group 'b'
+            for (int j = 0; j < order && pos + j < container.size(); j++)
+            {
+                main.push_back(container[pos + j]);
+            }
+            pos += order;
+            
+            first_a = false;
         }
-        order/=2;
+        
+        // Collect leftover elements
+        while (pos < container.size())
+        {
+            leftover.push_back(container[pos]);
+            pos++;
+        }
+        
+        printVector(main, "main");
+        printVector(pend, "pend");
+        printVector(leftover, "leftover");
+        exit(1);
+        order /= 2;
     }
     
     
