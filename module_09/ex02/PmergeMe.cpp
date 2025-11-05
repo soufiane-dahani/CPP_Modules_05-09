@@ -128,34 +128,48 @@ void PmergeMe::fordJohnsonSort(std::vector<int> &container)
             
             first_a = false;
         }
-        
-        // leftover
-        while (pos < container.size())
+
+        // Handle remaining elements that form an incomplete 'a' group
+        if (pos < container.size() && !first_a)
         {
-            leftover.push_back(container[pos]);
-            pos++;
+            // There are remaining elements and we've already processed at least one pair
+            // These belong to an 'a' group that should go to pend
+            while (pos < container.size())
+            {
+                pend.push_back(container[pos]);
+                pos++;
+            }
+        }
+        else
+        {
+            // leftover (truly unpaired elements)
+            while (pos < container.size())
+            {
+                leftover.push_back(container[pos]);
+                pos++;
+            }
         }
         pos = 0;
         int j;
-        j = 0;
         while (pos < pend.size())
         {
             j = 0;
+            bool inserted = false;
             while (j < main.size())
             {
                 if (pend[pos] < main[j])
                 {
-                    main.insert(main.begin() + j , pend[pos]);
+                    main.insert(main.begin() + j, pend[pos]);
+                    inserted = true;
                     break;
                 }
                 j++;
             }
-            pos++;
-        }
-        pos = 0;
-        while (pos < leftover.size())
-        {
-            main.push_back(leftover[pos]);
+            // If element wasn't inserted (it's larger than all elements in main)
+            if (!inserted)
+            {
+                main.push_back(pend[pos]);
+            }
             pos++;
         }
         container = main;
@@ -172,7 +186,7 @@ void PmergeMe::fordJohnsonSort(std::vector<int> &container)
 
 void PmergeMe::fordJohnsonSort(std::deque<int> &container)
 {
-    int order = 1;
+     int order = 1;
     int last_pos;
     int first_pos;
 
@@ -228,34 +242,48 @@ void PmergeMe::fordJohnsonSort(std::deque<int> &container)
             
             first_a = false;
         }
-        
-        // leftover
-        while (pos < container.size())
+
+        // Handle remaining elements that form an incomplete 'a' group
+        if (pos < container.size() && !first_a)
         {
-            leftover.push_back(container[pos]);
-            pos++;
+            // There are remaining elements and we've already processed at least one pair
+            // These belong to an 'a' group that should go to pend
+            while (pos < container.size())
+            {
+                pend.push_back(container[pos]);
+                pos++;
+            }
+        }
+        else
+        {
+            // leftover (truly unpaired elements)
+            while (pos < container.size())
+            {
+                leftover.push_back(container[pos]);
+                pos++;
+            }
         }
         pos = 0;
         int j;
-        j = 0;
         while (pos < pend.size())
         {
             j = 0;
+            bool inserted = false;
             while (j < main.size())
             {
                 if (pend[pos] < main[j])
                 {
-                    main.insert(main.begin() + j , pend[pos]);
+                    main.insert(main.begin() + j, pend[pos]);
+                    inserted = true;
                     break;
                 }
                 j++;
             }
-            pos++;
-        }
-        pos = 0;
-        while (pos < leftover.size())
-        {
-            main.push_back(leftover[pos]);
+            // If element wasn't inserted (it's larger than all elements in main)
+            if (!inserted)
+            {
+                main.push_back(pend[pos]);
+            }
             pos++;
         }
         container = main;

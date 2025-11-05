@@ -17,7 +17,7 @@ public:
     void processInput(char **argv);
     void parsing(const std::string& str);
     void displayResults();
-    void fordJohnsonSort(std::vector<int> &container);
+    static void fordJohnsonSort(std::vector<int> &container);
     void fordJohnsonSort(std::deque<int> &container);
 };
 
