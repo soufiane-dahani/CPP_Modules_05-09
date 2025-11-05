@@ -83,6 +83,56 @@ void PmergeMe::fordJohnsonSort(std::vector<int> &container)
         }
         order = order * 2;
     }
+    order/=2;
+    while (true)
+    {
+        if (order == 1)
+            break;
+        std::vector<int> main;
+        std::vector<int> pend;
+        std::vector<int> leftover;
+        int i = 0;
+        int j = 0;
+        int a1 = 0;
+
+        while (order * i <= container.size())
+        {
+            if ((order * i) % 2 == 0) // all b
+            {
+                j = 0;
+                while (j < order)
+                {
+                    main.push_back(container[(order * i) + j]);
+                    j++;
+                }
+            }
+            else
+            {
+                j = 0;
+                if (a1 == 0)
+                {
+                    a1 = 1;
+                    while (j < order)
+                    {
+                        main.push_back(container[(order * i) + j]);
+                        j++;
+                    }
+                }
+                else
+                    {
+                        while (j < order)
+                        {
+                            pend.push_back(container[(order * i) + j]);
+                            j++;
+                        }
+                    }
+            }
+            i++;
+        }
+        order/=2;
+    }
+    
+    
 }
 
 
