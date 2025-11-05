@@ -104,10 +104,9 @@ void PmergeMe::fordJohnsonSort(std::vector<int> &container)
         int pos = 0;
         bool first_a = true;
         
-        // Process pairs of groups (a, b)
         while (pos + order <= container.size())
         {
-            // Process group 'a'
+            //  'a'
             for (int j = 0; j < order && pos + j < container.size(); j++)
             {
                 if (first_a)
@@ -120,7 +119,7 @@ void PmergeMe::fordJohnsonSort(std::vector<int> &container)
             if (pos + order > container.size())
                 break;
             
-            // Process group 'b'
+            //  'b'
             for (int j = 0; j < order && pos + j < container.size(); j++)
             {
                 main.push_back(container[pos + j]);
@@ -130,28 +129,142 @@ void PmergeMe::fordJohnsonSort(std::vector<int> &container)
             first_a = false;
         }
         
-        // Collect leftover elements
+        // leftover
         while (pos < container.size())
         {
             leftover.push_back(container[pos]);
             pos++;
         }
-        
-        printVector(main, "main");
-        printVector(pend, "pend");
-        printVector(leftover, "leftover");
-        exit(1);
+        pos = 0;
+        int j;
+        j = 0;
+        while (pos < pend.size())
+        {
+            j = 0;
+            while (j < main.size())
+            {
+                if (pend[pos] < main[j])
+                {
+                    main.insert(main.begin() + j , pend[pos]);
+                    break;
+                }
+                j++;
+            }
+            pos++;
+        }
+        pos = 0;
+        while (pos < leftover.size())
+        {
+            main.push_back(leftover[pos]);
+            pos++;
+        }
+        container = main;
+        // printVector(main, "main");
+        // printVector(pend, "pend");
+        // printVector(leftover, "leftover");
+        // exit(1);
         order /= 2;
     }
-    
-    
+    // printVector(container, "container");
 }
 
 
 
 void PmergeMe::fordJohnsonSort(std::deque<int> &container)
 {
+    int order = 1;
+    int last_pos;
+    int first_pos;
 
+    while (order <= container.size() / 2)
+    {
+        last_pos = (order * 2) - 1; // 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0
+        first_pos = order - 1;
+        while (last_pos < container.size())  // Changed >= to 
+        {
+            if (container[first_pos] > container[last_pos])
+            {
+                container = swap_container(first_pos, last_pos, &container, order);
+            }
+            first_pos = first_pos + (2 * order);  // Fixed: add 2*order
+            last_pos = last_pos + (2 * order);    // Fixed: add 2*order
+        }
+        order = order * 2;
+    }
+    order/=2;
+    while (true)
+    {
+        if (order == 1)
+            break;
+        
+        std::deque<int> main;
+        std::deque<int> pend;
+        std::deque<int> leftover;
+        
+        int pos = 0;
+        bool first_a = true;
+        
+        while (pos + order <= container.size())
+        {
+            //  'a'
+            for (int j = 0; j < order && pos + j < container.size(); j++)
+            {
+                if (first_a)
+                    main.push_back(container[pos + j]);
+                else
+                    pend.push_back(container[pos + j]);
+            }
+            pos += order;
+            
+            if (pos + order > container.size())
+                break;
+            
+            //  'b'
+            for (int j = 0; j < order && pos + j < container.size(); j++)
+            {
+                main.push_back(container[pos + j]);
+            }
+            pos += order;
+            
+            first_a = false;
+        }
+        
+        // leftover
+        while (pos < container.size())
+        {
+            leftover.push_back(container[pos]);
+            pos++;
+        }
+        pos = 0;
+        int j;
+        j = 0;
+        while (pos < pend.size())
+        {
+            j = 0;
+            while (j < main.size())
+            {
+                if (pend[pos] < main[j])
+                {
+                    main.insert(main.begin() + j , pend[pos]);
+                    break;
+                }
+                j++;
+            }
+            pos++;
+        }
+        pos = 0;
+        while (pos < leftover.size())
+        {
+            main.push_back(leftover[pos]);
+            pos++;
+        }
+        container = main;
+        // printVector(main, "main");
+        // printVector(pend, "pend");
+        // printVector(leftover, "leftover");
+        // exit(1);
+        order /= 2;
+    }
 }
 
 
