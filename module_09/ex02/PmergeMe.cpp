@@ -62,19 +62,19 @@ void PmergeMe::processInput(char **argv)
     }
 }
 
-void printVector(const std::vector<int>& vec, const std::string& name)
-{
-    std::cout << name << ": ";
-    for (size_t i = 0; i < vec.size(); ++i)
-        std::cout << vec[i] << (i + 1 < vec.size() ? ", " : "");
-    std::cout << std::endl;
-}
+// void printVector(const std::vector<int>& vec, const std::string& name)
+// {
+//     std::cout << name << ": ";
+//     for (size_t i = 0; i < vec.size(); ++i)
+//         std::cout << vec[i] << (i + 1 < vec.size() ? ", " : "");
+//     std::cout << std::endl;
+// }
 
 std::vector<size_t> jacobsthalIndices(size_t n) {
     std::vector<size_t> indices;
     size_t j1 = 1, j2 = 1;
     while (j1 <= n) {
-        indices.push_back(j1 - 1); // convert to 0-based index
+        indices.push_back(j1 - 1); // nkhadmo b convert 0
         size_t next = j1 + 2 * j2;
         j2 = j1;
         j1 = next;
@@ -82,18 +82,17 @@ std::vector<size_t> jacobsthalIndices(size_t n) {
     return indices;
 }
 
-// Ford-Johnson (Merge-Insertion Sort)
 void PmergeMe::fordJohnsonSort(std::vector<int> &container) {
     if (container.size() <= 1)
         return;
 
-    // Step 1: Pair and sort each pair internally
+    // pair and sort
     for (size_t i = 0; i + 1 < container.size(); i += 2) {
         if (container[i] > container[i + 1])
             std::swap(container[i], container[i + 1]);
     }
 
-    // Step 2: Separate bigger (main) and smaller (pend)
+    // smaller larger
     std::vector<int> main;
     std::vector<int> pend;
     for (size_t i = 0; i + 1 < container.size(); i += 2) {
@@ -101,12 +100,12 @@ void PmergeMe::fordJohnsonSort(std::vector<int> &container) {
         pend.push_back(container[i]);     // smaller
     }
     if (container.size() % 2 != 0)
-        main.push_back(container.back()); // leftover element
+        main.push_back(container.back()); // leftover
 
-    // Step 3: Recursively sort main
+    // sort main
     fordJohnsonSort(main);
 
-    // Step 4: Insert pend elements in Jacobsthal order
+    // nsta3mlo jacob bach n3arfo index
     std::vector<int> sorted_main = main;
     std::vector<size_t> jac_indices = jacobsthalIndices(pend.size());
     std::vector<bool> inserted(pend.size(), false);
@@ -120,33 +119,28 @@ void PmergeMe::fordJohnsonSort(std::vector<int> &container) {
         }
     }
 
-    // Step 5: Insert remaining pend elements
+    // remain
     for (size_t i = 0; i < pend.size(); ++i) {
         if (!inserted[i]) {
             std::vector<int>::iterator pos = std::lower_bound(sorted_main.begin(), sorted_main.end(), pend[i]);
             sorted_main.insert(pos, pend[i]);
         }
     }
-
-    // Step 6: Copy back
     container = sorted_main;
 }
 
 bool isSorted(const std::vector<int>& vec)
 {
     if (vec.size() < 2)
-        return true; // A single element (or empty) vector is always sorted
+        return true;
 
     for (size_t i = 1; i < vec.size(); ++i)
     {
         if (vec[i - 1] > vec[i])
-            return false; // Not sorted
+            return false;
     }
-    return true; // All elements are in ascending order
+    return true;
 }
-
-
-
 
 void PmergeMe::displayResults()
 {
@@ -172,10 +166,10 @@ void PmergeMe::displayResults()
         std::cout << vecCopy[i] << " ";
     std::cout << std::endl;
 
-    if (isSorted(vecCopy))
-        std::cout << "\033[32mThe vector is sorted.\033[0m\n"; // Green
-    else
-        std::cout << "\033[31mThe vector is NOT sorted.\033[0m\n"; 
+    // if (isSorted(vecCopy))
+    //     std::cout << "\033[32mThe vector is sorted.\033[0m\n";
+    // else
+    //     std::cout << "\033[31mThe vector is NOT sorted.\033[0m\n"; 
 
     std::cout << std::fixed << std::setprecision(5);
     std::cout << "Time to process a range of " << _vec.size()
@@ -188,7 +182,7 @@ std::deque<size_t> jacobsthalIndices2(size_t n) {
     std::deque<size_t> indices;
     size_t j1 = 1, j2 = 1;
     while (j1 <= n) {
-        indices.push_back(j1 - 1); // convert to 0-based index
+        indices.push_back(j1 - 1);
         size_t next = j1 + 2 * j2;
         j2 = j1;
         j1 = next;
@@ -196,18 +190,15 @@ std::deque<size_t> jacobsthalIndices2(size_t n) {
     return indices;
 }
 
-// Ford-Johnson (Merge-Insertion Sort)
 void PmergeMe::fordJohnsonSort(std::deque<int> &container) {
     if (container.size() <= 1)
         return;
 
-    // Step 1: Pair and sort each pair internally
     for (size_t i = 0; i + 1 < container.size(); i += 2) {
         if (container[i] > container[i + 1])
             std::swap(container[i], container[i + 1]);
     }
 
-    // Step 2: Separate bigger (main) and smaller (pend)
     std::deque<int> main;
     std::deque<int> pend;
     for (size_t i = 0; i + 1 < container.size(); i += 2) {
@@ -215,12 +206,10 @@ void PmergeMe::fordJohnsonSort(std::deque<int> &container) {
         pend.push_back(container[i]);     // smaller
     }
     if (container.size() % 2 != 0)
-        main.push_back(container.back()); // leftover element
+        main.push_back(container.back());
 
-    // Step 3: Recursively sort main
     fordJohnsonSort(main);
 
-    // Step 4: Insert pend elements in Jacobsthal order
     std::deque<int> sorted_main = main;
     std::deque<size_t> jac_indices = jacobsthalIndices2(pend.size());
     std::deque<bool> inserted(pend.size(), false);
@@ -234,7 +223,6 @@ void PmergeMe::fordJohnsonSort(std::deque<int> &container) {
         }
     }
 
-    // Step 5: Insert remaining pend elements
     for (size_t i = 0; i < pend.size(); ++i) {
         if (!inserted[i]) {
             std::deque<int>::iterator pos = std::lower_bound(sorted_main.begin(), sorted_main.end(), pend[i]);
@@ -242,7 +230,6 @@ void PmergeMe::fordJohnsonSort(std::deque<int> &container) {
         }
     }
 
-    // Step 6: Copy back
     container = sorted_main;
 }
 
