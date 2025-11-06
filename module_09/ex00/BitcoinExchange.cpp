@@ -152,11 +152,9 @@ bool BitcoinExchange::isValidDate(const std::string &date) const
 
 bool BitcoinExchange::isValidValue(const std::string &value) const
 {
-    std::istringstream ss(value);
-    float num;
-    ss >> num;
-
-    if (ss.fail() || !ss.eof())
+    char *end;
+    double num = std::strtod(value.c_str(), &end);
+    if (*end != '\0')
         return false;
 
     if (num < 0.0f )
