@@ -13,4 +13,5 @@ int main(int argc, char **argv) {
         std::cerr << "Error\n";
         return 1;
     }
+    return 0;
 }
