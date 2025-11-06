@@ -18,7 +18,7 @@ public:
     void parsing(const std::string& str);
     void displayResults();
     static void fordJohnsonSort(std::vector<int> &container);
-    void fordJohnsonSort(std::deque<int> &container);
+    //void fordJohnsonSort(std::deque<int> &container);
 };
 
 template <typename Container>

@@ -82,51 +82,54 @@ std::vector<size_t> jacobsthalIndices(size_t n) {
     return indices;
 }
 
+// Ford-Johnson (Merge-Insertion Sort)
 void PmergeMe::fordJohnsonSort(std::vector<int> &container) {
-    if (container.size() <= 1) return;
+    if (container.size() <= 1)
+        return;
 
-    // Step 1: Form pairs and sort within each pair
+    // Step 1: Pair and sort each pair internally
     for (size_t i = 0; i + 1 < container.size(); i += 2) {
         if (container[i] > container[i + 1])
             std::swap(container[i], container[i + 1]);
     }
 
-    // Step 2: Separate main (bigger) and pend (smaller)
+    // Step 2: Separate bigger (main) and smaller (pend)
     std::vector<int> main;
     std::vector<int> pend;
     for (size_t i = 0; i + 1 < container.size(); i += 2) {
-        main.push_back(container[i + 1]); // bigger
+        main.push_back(container[i + 1]); // larger
         pend.push_back(container[i]);     // smaller
     }
     if (container.size() % 2 != 0)
-        main.push_back(container.back()); // leftover last element
+        main.push_back(container.back()); // leftover element
 
-    // Step 3: Sort main
-    std::sort(main.begin(), main.end());
+    // Step 3: Recursively sort main
+    fordJohnsonSort(main);
 
     // Step 4: Insert pend elements in Jacobsthal order
+    std::vector<int> sorted_main = main;
     std::vector<size_t> jac_indices = jacobsthalIndices(pend.size());
     std::vector<bool> inserted(pend.size(), false);
 
-    for (size_t idx : jac_indices) {
+    for (size_t j = 0; j < jac_indices.size(); ++j) {
+        size_t idx = jac_indices[j];
         if (idx < pend.size() && !inserted[idx]) {
-            // Insert pend[idx] into main at correct position
-            auto pos = std::lower_bound(main.begin(), main.end(), pend[idx]);
-            main.insert(pos, pend[idx]);
+            std::vector<int>::iterator pos = std::lower_bound(sorted_main.begin(), sorted_main.end(), pend[idx]);
+            sorted_main.insert(pos, pend[idx]);
             inserted[idx] = true;
         }
     }
 
-    // Insert any remaining pend elements that were not in Jacobsthal sequence
+    // Step 5: Insert remaining pend elements
     for (size_t i = 0; i < pend.size(); ++i) {
         if (!inserted[i]) {
-            auto pos = std::lower_bound(main.begin(), main.end(), pend[i]);
-            main.insert(pos, pend[i]);
+            std::vector<int>::iterator pos = std::lower_bound(sorted_main.begin(), sorted_main.end(), pend[i]);
+            sorted_main.insert(pos, pend[i]);
         }
     }
 
-    // Step 5: Copy back to original container
-    container = main;
+    // Step 6: Copy back
+    container = sorted_main;
 }
 
 bool isSorted(const std::vector<int>& vec)
@@ -142,116 +145,7 @@ bool isSorted(const std::vector<int>& vec)
     return true; // All elements are in ascending order
 }
 
-void PmergeMe::fordJohnsonSort(std::deque<int> &container)
-{
-     int order = 1;
-    int last_pos;
-    int first_pos;
 
-    while (order <= container.size() / 2)
-    {
-        last_pos = (order * 2) - 1; // 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0
-        first_pos = order - 1;
-        while (last_pos < container.size())  // Changed >= to 
-        {
-            if (container[first_pos] > container[last_pos])
-            {
-                container = swap_container(first_pos, last_pos, &container, order);
-            }
-            first_pos = first_pos + (2 * order);  // Fixed: add 2*order
-            last_pos = last_pos + (2 * order);    // Fixed: add 2*order
-        }
-        order = order * 2;
-    }
-    order/=2;
-    while (true)
-    {
-        if (order == 1)
-            break;
-        
-        std::deque<int> main;
-        std::deque<int> pend;
-        std::deque<int> leftover;
-        
-        int pos = 0;
-        bool first_a = true;
-        
-        while (pos + order <= container.size())
-        {
-            //  'a'
-            for (int j = 0; j < order && pos + j < container.size(); j++)
-            {
-                if (first_a)
-                    main.push_back(container[pos + j]);
-                else
-                    pend.push_back(container[pos + j]);
-            }
-            pos += order;
-            
-            if (pos + order > container.size())
-                break;
-            
-            //  'b'
-            for (int j = 0; j < order && pos + j < container.size(); j++)
-            {
-                main.push_back(container[pos + j]);
-            }
-            pos += order;
-            
-            first_a = false;
-        }
-
-        // Handle remaining elements that form an incomplete 'a' group
-        if (pos < container.size() && !first_a)
-        {
-            // There are remaining elements and we've already processed at least one pair
-            // These belong to an 'a' group that should go to pend
-            while (pos < container.size())
-            {
-                pend.push_back(container[pos]);
-                pos++;
-            }
-        }
-        else
-        {
-            // leftover (truly unpaired elements)
-            while (pos < container.size())
-            {
-                leftover.push_back(container[pos]);
-                pos++;
-            }
-        }
-        pos = 0;
-        int j;
-        while (pos < pend.size())
-        {
-            j = 0;
-            bool inserted = false;
-            while (j < main.size())
-            {
-                if (pend[pos] < main[j])
-                {
-                    main.insert(main.begin() + j, pend[pos]);
-                    inserted = true;
-                    break;
-                }
-                j++;
-            }
-            // If element wasn't inserted (it's larger than all elements in main)
-            if (!inserted)
-            {
-                main.push_back(pend[pos]);
-            }
-            pos++;
-        }
-        container = main;
-        // printVector(main, "main");
-        // printVector(pend, "pend");
-        // printVector(leftover, "leftover");
-        // exit(1);
-        order /= 2;
-    }
-}
 
 
 void PmergeMe::displayResults()
@@ -269,7 +163,7 @@ void PmergeMe::displayResults()
 
     std::deque<int> deqCopy = _deq;
     clock_t startDeq = clock();
-    fordJohnsonSort(deqCopy);
+    //fordJohnsonSort(deqCopy);
     clock_t endDeq = clock();
     double elapsedDeq = static_cast<double>(endDeq - startDeq) / CLOCKS_PER_SEC * 1000000.0;
 
