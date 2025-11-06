@@ -28,16 +28,11 @@ void RPN::evaluate(const std::string &expr)
     std::string token;
     while (iss >> token)
     {
-        if (token[0] == '+')
-            token.erase(0, 1);
-        if (isdigit(token[0]))
+        char *end ;
+        double result = std::strtod(token.c_str(), &end);
+        int number = static_cast<int>(result);
+        if (*end == '\0')
         {
-            if (token.find_first_not_of("/*+-") == std::string::npos)
-            {
-                std::cerr << "Error" << std::endl;
-                return;
-            }
-            int number = std::atoi(token.c_str());
             if (number >= 10 )
             {
                 std::cerr << "Error" << std::endl;
